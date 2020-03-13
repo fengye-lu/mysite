@@ -14,6 +14,8 @@ def userInfo(req):
         u = req.POST.get('username', None)
         s = req.POST.get('sex', None)
         e = req.POST.get('email', None)
+        y = req.POST.get('year', None)
+
         # user = {'username':username, 'sex':sex, 'email':email}
         # user_list.append(user)
 
@@ -21,6 +23,7 @@ def userInfo(req):
             username=u,
             sex=s,
             email=e,
+            year=y,
         )
     user_list = models.UserInfo.objects.all()
 

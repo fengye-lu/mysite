@@ -7,11 +7,13 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:identifier.sqlite</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="db.sqlite3" uuid="1510bc2c-8b88-4693-b6e0-cd2bb4483a6d">
+    <data-source source="LOCAL" name="Django default" uuid="b6d76e4e-e574-49e0-9730-d4120c0852ed">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/mysite/settings.py</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:G:\web框架\mysite\db.sqlite3</jdbc-url>
     </data-source>
   </component>
 </project>
