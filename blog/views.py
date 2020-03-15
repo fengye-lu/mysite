@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from blog import models
+from django.db.models import Avg, Min, Sum, Max
+from django.http import JsonResponse
 # Create your views here.
 import datetime
 
@@ -19,13 +21,38 @@ def userInfo(req):
         # user = {'username':username, 'sex':sex, 'email':email}
         # user_list.append(user)
 
+        # 增
         models.UserInfo.objects.create(
             username=u,
             sex=s,
             email=e,
             year=y,
         )
+        '''  create传值的方式二，用字典的形式
+                models.UserInfo.objects.create(
+            **{
+                'username':u,
+                'sex':s,
+                'email':e,
+                'year':y,
+            }
+        )
+        '''
+
     user_list = models.UserInfo.objects.all()
+
+    # obj = models.UserInfo.objects.filter(id__in=[1, 3, 6, 7])
+    # print(obj[0].username)
+
+    # models.UserInfo.objects.filter(id=4).update(username='jackey',sex='diddle',email='dsds',year=3)
+
+    # obj = models.UserInfo.objects.filter(id=2)
+    # print(obj.values('sex'))
+    # print(obj.query)  # 显示实现数据库操作的sql语句
+
+    print(models.UserInfo.objects.all().aggregate(Avg('year')))
+
+
 
     # return render(req, 'index.html', {'user_list':user_list})
     return render(req, 'index.html', locals()) # 用locals取得本地变量

@@ -1,0 +1,80 @@
+
+ORM对数据库进行操作之增删改查
+
+# 增
+models.UserInfo.objects.create(
+    username=u,
+    sex=s,
+    email=e,
+    year=y,
+)
+'''  create传值的方式二，用字典的形式
+        models.UserInfo.objects.create(
+    **{
+        'username':u,
+        'sex':s,
+        'email':e,
+        'year':y,
+    }
+)
+'''
+
+# 删
+models.UserInfo.objects.filter(id=2).delete()   # 级联删除
+
+# 改
+models.UserInfo.objects.filter(id=1).update(username='jacklove')
+
+# 查
+models.UserInfo.objects.filter()  它包含了所有符合条件的对象
+# models.UserInfo.objects.filter(id=2).values('username')
+# [{'username':'fengye'}]
+models.UserInfo.objects.all()
+models.UserInfo.objects.get() 返回的是跟删选条件相匹配的对象，返回的结果有且只有一个，如果筛选
+的符合条件的对象超过一个或者没有都会抛出错误
+models.UserInfo.objects.exclude(id=2)  # 跟filter相反，查询的是除了满足条件以外的
+models.UserInfo.objects.filter(id=2).order_by('id')  # 对查询的结果进行排序，'-id'表示反序
+models.UserInfo.objects.filter(id=2).reverse()  # 对查询结果反向排序
+models.UserInfo.objects.filter(id=2).distinct()  # 对查询的结果剔除重复记录
+models.UserInfo.objects.filter(id=3).count()  # 返回的是满足筛选条件的对象数量
+models.UserInfo.objects.filter(id=3).first()  # 返回第一条记录
+models.UserInfo.objects.filter(id=3).last() # 返回最后一条记录
+models.UserInfo.objects.filter(id=3).exists()  # 判断是否存在满足条件的记录，返回的是True、False
+
+# 神奇的双下划线
+models.UserInfo.objects.filter(id__gt=1,id__lt=4) # 查询id大于1小于3的结果
+models.UserInfo.objects.filtre(id__in=[1,3,5,7])  # 查询id在[1,3,5,7]中的结果
+models.UserInfo.objects.filter(name__contains='小')  # 模糊查询包含'小'的name
+models.UserInfo.objects.filter(name__icontains='fsf')  # 不区分大小写
+models.UserInfo.objects.filtre(id__range=[1,7])   #  返回id在这个区间的字段，相当于sql中的between
+models.UserInfo.objects.filtre(birthday__year=2000)  # 将一个日期的具体年月日拿出来返回
+models.UserInfo.objects.filter(name__startwith='fsf')
+
+
+# 外键的查询操作
+# 正向查询
+book_obj = models.Book.objects.all().first()
+ret = book_obj.publisher  # 和我这本书关联的出版社对象
+
+# 查询id是1的书的出版社的名称
+# 双下划线就表示跨了一张表
+models.Book.object.filter(id=1).values('publisher__name')
+
+# 反向查询
+# 基于对象查询
+publisher_obj = models.Publisher.objects.first()
+ret = publisher_obj.book_set.all()
+# 基于双下划线
+ret = models.Publisher.objects.filter(id=1).values_list('book_title')
+
+
+
+models.Book.object.filter(title='Go').values('publisher__city')
+
+# 聚合查询
+from django.db.models import Avg,Min,Sum,Max
+models.Book.object.all().aggregate(Avg('price'))
+
+# 分组查询
+models.Book.object.values.('authors__name').annotate(Sum('price'))
+

@@ -75,9 +75,20 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# 数据库相关的配置
 DATABASES = {
     'default': {
+        # 连接数据库的类型
+        # 'ENGINE': 'django.db.backends.mysql',
         'ENGINE': 'django.db.backends.sqlite3',
+        # 连接数据库的地址
+        # 'HOST':'127.0.0.1',
+        # 端口
+        # 'PORT':8000,
+        # 数据库名称
+        # 'NAME':'test',
+        # 'USER':'root',
+        # 'PASSWORD':'',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -124,3 +135,22 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "statics"),
 )
+
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'propagate': True,
+#             'level': 'DEBUG',
+#         },
+#     }
+# }
